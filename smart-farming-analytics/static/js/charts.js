@@ -9,6 +9,16 @@
    const values = [inputs.pH, inputs.nitrogen, inputs.phosphorus, inputs.potassium, inputs.organic_matter, inputs.moisture];
    const data = [{type:'scatterpolar', r:values, theta:categories, fill:'toself', name:'Soil'}];
    Plotly.newPlot('soilHealthCharts', data, {polar:{radialaxis:{visible:true, range:[0, Math.max(...values)*1.2]}}, showlegend:false, title:'Nutrient Radar'});
+   // Gauge-like chart using Chart.js for health score
+   const gaugeContainer = document.createElement('canvas');
+   gaugeContainer.height = 120;
+   document.getElementById('soilHealthCharts').appendChild(gaugeContainer);
+   const ctx = gaugeContainer.getContext('2d');
+   new Chart(ctx, {
+     type: 'doughnut',
+     data: { labels: ['Score','Remaining'], datasets: [{ data: [result.health_score, 100-result.health_score], backgroundColor: ['#2e7d32','#e0e0e0'], borderWidth: 0 }] },
+     options: { cutout: '80%', plugins:{legend:{display:false}, tooltip:{enabled:false}}, rotation: -90, circumference: 180 }
+   });
  }
 
  function drawPestCharts(result) {
