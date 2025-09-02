@@ -1,0 +1,15 @@
+ body {
+   background: linear-gradient(180deg, #e8f5e9 0%, #e3f2fd 100%);
+ }
+ .bg-primary-gradient {
+   background: linear-gradient(90deg, #2e7d32, #1565c0);
+ }
+ .metric {
+   border: none;
+   box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+   transition: transform .2s ease, box-shadow .2s ease;
+ }
+ .metric:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.15); }
+ .spinner {
+   display: none;
+ }
