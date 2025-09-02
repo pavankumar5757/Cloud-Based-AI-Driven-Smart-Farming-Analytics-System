@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from config import Config
+from utils.data_preprocessing import load_external_soil_health
 from utils.ml_utils import save_model, load_model
 
 class SoilHealthAnalyzer:
@@ -47,7 +48,8 @@ class SoilHealthAnalyzer:
         })
 
     def _train_and_save_default(self) -> None:
-        df = self._generate_data()
+        ext = load_external_soil_health()
+        df = ext if ext is not None else self._generate_data()
         X = df.drop(columns=["label"]) ; y = df["label"]
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=7)
         clf = RandomForestClassifier(n_estimators=250, random_state=7)

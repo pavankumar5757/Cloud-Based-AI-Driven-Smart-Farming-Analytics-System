@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from config import Config
+from utils.data_preprocessing import load_external_crop_yield
 from utils.ml_utils import save_model, load_model
 
 class CropYieldPredictor:
@@ -46,7 +47,8 @@ class CropYieldPredictor:
         return pd.get_dummies(df, columns=["soil_type"], drop_first=True)
 
     def _train_and_save_default(self) -> None:
-        df = self._generate_synthetic_data()
+        ext = load_external_crop_yield()
+        df = ext if ext is not None else self._generate_synthetic_data()
         X = self._encode(df.drop(columns=["yield"]))
         y = df["yield"]
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

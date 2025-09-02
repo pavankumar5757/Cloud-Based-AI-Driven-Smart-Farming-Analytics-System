@@ -4,6 +4,7 @@ import pandas as pd
 from typing import Dict
 from config import Config
 from utils.ml_utils import save_model, load_model
+from utils.data_preprocessing import load_external_market_prices
 import statsmodels.api as sm
 
 class MarketPricePredictor:
@@ -27,7 +28,8 @@ class MarketPricePredictor:
         return pd.Series(price, index=idx)
 
     def _train_default_model(self):
-        series = self._generate_series()
+        ext = load_external_market_prices()
+        series = ext.set_index('date')['price'] if ext is not None else self._generate_series()
         # Simple ARIMA(2,1,2)
         model = sm.tsa.ARIMA(series, order=(2, 1, 2)).fit()
         return model

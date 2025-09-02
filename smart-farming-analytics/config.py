@@ -21,6 +21,16 @@ class Config:
     PEST_CNN_MODEL_PATH = os.path.join(MODEL_DIR, "pest_cnn.h5")
     MARKET_ARIMA_PATH = os.path.join(MODEL_DIR, "market_arima.pkl")
 
+    # External datasets (Kaggle-style) configuration
+    EXTERNAL_DATA_DIR = os.environ.get(
+        "EXTERNAL_DATA_DIR", os.path.join(os.path.dirname(__file__), "data", "external")
+    )
+    # Optional explicit filenames (if provided, they will be used)
+    CROP_YIELD_CSV = os.environ.get("CROP_YIELD_CSV", "")
+    SOIL_HEALTH_CSV = os.environ.get("SOIL_HEALTH_CSV", "")
+    PEST_DATA_CSV = os.environ.get("PEST_DATA_CSV", "")
+    MARKET_PRICE_CSV = os.environ.get("MARKET_PRICE_CSV", "")
+
     # Plotly config
     PLOTLY_RENDERER = os.environ.get("PLOTLY_RENDERER", "browser")
 
@@ -30,3 +40,4 @@ class Config:
 
 os.makedirs(Config.MODEL_DIR, exist_ok=True)
 os.makedirs(Config.UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(Config.EXTERNAL_DATA_DIR, exist_ok=True)
